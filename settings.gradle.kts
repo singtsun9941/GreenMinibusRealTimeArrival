@@ -16,8 +16,12 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url = uri(System.getenv("MY_MAVEN_REPO_PATH"))
+        }
     }
 }
 
 rootProject.name = "GreenMinibusRealTimeArrival"
 include(":app")
+include(":GreenMinibusRealTimeArrivalData")
