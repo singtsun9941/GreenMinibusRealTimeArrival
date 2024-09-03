@@ -1,4 +1,4 @@
-package com.stwcoding.datamodule.hkgov
+package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata
 
 import org.junit.Test
 

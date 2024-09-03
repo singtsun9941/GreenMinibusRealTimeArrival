@@ -1,4 +1,4 @@
-package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata
+package com.stwcoding.datamodule.hkgov
 
 import com.stwcoding.networkmodule.ktothelper.HttpClientHelper
 import com.stwcoding.networkmodule.ktothelper.createHttpClient
