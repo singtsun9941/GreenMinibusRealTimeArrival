@@ -22,7 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.stwcoding.datamodule.hkgov.GreenMinibusRealTimeArrivalClient
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.RegionModel
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.theme.GreenMinibusRealTimeArrivalTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -62,11 +62,7 @@ class MainActivity : ComponentActivity() {
                             onClick = {
                                 scope.launch {
                                     state.emit(
-                                        try{
-                                            test.censorWords(uncensoredText).getOrNull().orEmpty()
-                                        } catch (e: Exception){
-                                            e.message.orEmpty()
-                                        }
+                                        test.routeListing(RegionModel.NewTerritories).getOrNull()?.type.orEmpty()
                                     )
                                 }
                             }
