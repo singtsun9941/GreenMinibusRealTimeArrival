@@ -11,6 +11,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.rememberCoroutineScope
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.APITestingScreen
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.RouteDetailsRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.RouteListingRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.theme.GreenMinibusRealTimeArrivalTheme
 import kotlinx.coroutines.launch
@@ -28,6 +29,15 @@ class MainActivity : ComponentActivity() {
                     title = "Green Minibus Real Time Arrival API",
                     { responseState ->
                         RouteListingRequest(
+                            client = client,
+                        ) { response ->
+                            scope.launch {
+                                responseState.emit(response.toString())
+                            }
+                        }
+                    },
+                    { responseState ->
+                        RouteDetailsRequest(
                             client = client,
                         ) { response ->
                             scope.launch {

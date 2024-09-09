@@ -1,6 +1,7 @@
 package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata
 
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.RegionModel
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteDetailsResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.routelisting.IRouteListingResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.routelisting.RoutesAllResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.routelisting.RoutesRegionalResponse
@@ -18,5 +19,9 @@ class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
         return region?.let {
             get<RoutesRegionalResponse>("route/${region.id}")
         } ?: get<RoutesAllResponse>("route")
+    }
+
+    suspend fun routeDetails(region: RegionModel, routeCode: String): Result<RouteDetailsResponse> {
+        return get("route/${region.id}/$routeCode")
     }
 }
