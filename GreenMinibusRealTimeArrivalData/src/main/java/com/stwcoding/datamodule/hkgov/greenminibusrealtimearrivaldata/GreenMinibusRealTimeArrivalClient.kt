@@ -24,4 +24,8 @@ class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
     suspend fun routeDetails(region: RegionModel, routeCode: String): Result<RouteDetailsResponse> {
         return get("route/${region.id}/$routeCode")
     }
+
+    suspend fun routeDetails(routeCodeId: String): Result<RouteDetailsResponse> {
+        return get("route/$routeCodeId")
+    }
 }
