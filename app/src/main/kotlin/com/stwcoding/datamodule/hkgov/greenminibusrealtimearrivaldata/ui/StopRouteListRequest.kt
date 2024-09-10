@@ -23,16 +23,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.GreenMinibusRealTimeArrivalClient
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.RegionModel
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteDetailsResponse
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stoproute.StopRouteListResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stop.StopListResponse
 import kotlinx.coroutines.launch
 
 @Composable
 fun StopRouteListRequest(
     modifier: Modifier = Modifier,
     client: GreenMinibusRealTimeArrivalClient,
-    onResponseReceived: (StopRouteListResponse?) -> Unit
+    onResponseReceived: (StopListResponse?) -> Unit
 ) = Box(modifier = modifier) {
     val scope = rememberCoroutineScope()
     var routeId by rememberSaveable { mutableStateOf("") }
@@ -74,7 +72,7 @@ fun StopRouteListRequest(
             onClick = {
                 scope.launch {
                     onResponseReceived(
-                        client.fetchStopRouteList(routeId, routeSequence).getOrNull()
+                        client.fetchStopListByRoute(routeId, routeSequence).getOrNull()
                     )
                 }
             }

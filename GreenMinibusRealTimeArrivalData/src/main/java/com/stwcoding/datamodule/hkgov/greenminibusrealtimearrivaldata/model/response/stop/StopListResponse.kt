@@ -3,14 +3,14 @@
  * 版權所有© 2024. singtsun9941
  */
 
-package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stoproute
+package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stop
 
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class StopRouteListResponse(
+data class StopListResponse(
     @SerialName("type")
     val type: String = "", // Route-Stop
     @SerialName("version")
