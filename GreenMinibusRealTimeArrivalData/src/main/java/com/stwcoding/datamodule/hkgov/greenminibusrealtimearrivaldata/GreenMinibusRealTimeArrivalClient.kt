@@ -5,6 +5,7 @@ import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.resp
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.routelisting.IRouteListingResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.routelisting.RoutesAllResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.routelisting.RoutesRegionalResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stop.StopDetailsResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stop.StopListResponse
 import com.stwcoding.networkmodule.ktothelper.HttpClientHelper
 import com.stwcoding.networkmodule.ktothelper.createHttpClient
@@ -28,6 +29,10 @@ class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
 
     suspend fun fetchRouteDetails(routeCodeId: String): Result<RouteDetailsResponse> {
         return get("route/$routeCodeId")
+    }
+
+    suspend fun fetchStopDetails(stopId: String): Result<StopDetailsResponse> {
+        return get("stop/$stopId")
     }
 
     suspend fun fetchStopListByRoute(routeId: String, routeSequence: String): Result<StopListResponse> {
