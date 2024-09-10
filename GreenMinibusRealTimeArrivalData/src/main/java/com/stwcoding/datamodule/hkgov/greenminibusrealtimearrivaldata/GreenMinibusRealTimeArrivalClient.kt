@@ -16,17 +16,17 @@ class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
         domain = "https://data.etagmb.gov.hk"
     )
 ) {
-    suspend fun routeListing(region: RegionModel? = null): Result<IRouteListingResponse> {
+    suspend fun fetchRouteList(region: RegionModel? = null): Result<IRouteListingResponse> {
         return region?.let {
             get<RoutesRegionalResponse>("route/${region.id}")
         } ?: get<RoutesAllResponse>("route")
     }
 
-    suspend fun routeDetails(region: RegionModel, routeCode: String): Result<RouteDetailsResponse> {
+    suspend fun fetchRouteDetails(region: RegionModel, routeCode: String): Result<RouteDetailsResponse> {
         return get("route/${region.id}/$routeCode")
     }
 
-    suspend fun routeDetails(routeCodeId: String): Result<RouteDetailsResponse> {
+    suspend fun fetchRouteDetails(routeCodeId: String): Result<RouteDetailsResponse> {
         return get("route/$routeCodeId")
     }
 
