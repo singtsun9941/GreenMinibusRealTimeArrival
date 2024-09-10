@@ -54,7 +54,7 @@ fun RouteListingRequest(
             onClick = {
                 scope.launch {
                     onResponseReceived(
-                        client.routeListing(regionModel).getOrNull()
+                        client.fetchRouteList(regionModel).getOrNull()
                     )
                 }
             }

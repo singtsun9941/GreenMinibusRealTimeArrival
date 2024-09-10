@@ -23,7 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.GreenMinibusRealTimeArrivalClient
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.RegionModel
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteDetailsResponse
 import kotlinx.coroutines.launch
 
@@ -61,7 +60,7 @@ fun RouteDetailsByRouteIdRequest(
             onClick = {
                 scope.launch {
                     onResponseReceived(
-                        client.routeDetails(regionId).getOrNull()
+                        client.fetchRouteDetails(regionId).getOrNull()
                     )
                 }
             }

@@ -75,7 +75,7 @@ fun RouteDetailsRequest(
             onClick = {
                 scope.launch {
                     onResponseReceived(
-                        client.routeDetails(regionModel, regionCode).getOrNull()
+                        client.fetchRouteDetails(regionModel, regionCode).getOrNull()
                     )
                 }
             }
