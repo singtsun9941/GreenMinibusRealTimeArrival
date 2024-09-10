@@ -27,7 +27,7 @@ import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.resp
 import kotlinx.coroutines.launch
 
 @Composable
-fun StopRouteListRequest(
+fun StopListByRouteRequest(
     modifier: Modifier = Modifier,
     client: GreenMinibusRealTimeArrivalClient,
     onResponseReceived: (StopListResponse?) -> Unit
