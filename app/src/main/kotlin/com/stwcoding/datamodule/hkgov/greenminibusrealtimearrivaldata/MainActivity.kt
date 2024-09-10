@@ -14,6 +14,7 @@ import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.APITest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.RouteDetailsByRouteIdRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.RouteDetailsRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.RouteListingRequest
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.StopRouteListRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.theme.GreenMinibusRealTimeArrivalTheme
 import kotlinx.coroutines.launch
 
@@ -48,6 +49,15 @@ class MainActivity : ComponentActivity() {
                     },
                     { responseState ->
                         RouteDetailsByRouteIdRequest(
+                            client = client,
+                        ) { response ->
+                            scope.launch {
+                                responseState.emit(response.toString())
+                            }
+                        }
+                    },
+                    { responseState ->
+                        StopRouteListRequest(
                             client = client,
                         ) { response ->
                             scope.launch {
