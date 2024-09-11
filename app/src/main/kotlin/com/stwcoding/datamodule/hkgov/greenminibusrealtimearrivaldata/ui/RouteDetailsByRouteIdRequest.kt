@@ -65,7 +65,7 @@ fun RouteDetailsByRouteIdRequest(
                 }
             }
         ) {
-            Text(text = "Route Details")
+            Text(text = "Fetch Route Details")
         }
     }
 }

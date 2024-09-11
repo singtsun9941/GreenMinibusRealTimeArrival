@@ -67,7 +67,7 @@ fun StopDetailsRequest(
                 }
             }
         ) {
-            Text(text = "Route Details")
+            Text(text = "Fetch Stop Details")
         }
     }
 }
