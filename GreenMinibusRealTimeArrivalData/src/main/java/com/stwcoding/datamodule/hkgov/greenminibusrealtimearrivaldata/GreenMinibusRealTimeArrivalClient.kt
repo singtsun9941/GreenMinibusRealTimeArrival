@@ -2,6 +2,7 @@ package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata
 
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.RegionModel
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteDetailsResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteListResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.routelisting.IRouteListingResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.routelisting.RoutesAllResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.routelisting.RoutesRegionalResponse
@@ -37,5 +38,9 @@ class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
 
     suspend fun fetchStopListByRoute(routeId: String, routeSequence: String): Result<StopListResponse> {
         return get("route-stop/$routeId/$routeSequence")
+    }
+
+    suspend fun fetchRouteListByStop(stopId: String): Result<RouteListResponse> {
+        return get("stop-route/$stopId")
     }
 }
