@@ -18,7 +18,7 @@ data class RouteDetailsResponse(
     @SerialName("generated_timestamp")
     val generatedTimestamp: String = "", // 2020-12-28T15:07:55.373+08:00
     @SerialName("data")
-    val `data`: List<Data> = listOf()
+    val data: List<Data> = listOf()
 ) {
     @Serializable
     data class Data(
