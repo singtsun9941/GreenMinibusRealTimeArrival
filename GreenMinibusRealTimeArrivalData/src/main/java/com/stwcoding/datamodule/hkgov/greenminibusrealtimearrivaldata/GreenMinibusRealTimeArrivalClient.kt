@@ -3,9 +3,9 @@ package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.RegionModel
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteDetailsResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteListResponse
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.routelisting.IRouteListingResponse
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.routelisting.RoutesAllResponse
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.routelisting.RoutesRegionalResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.list.IRouteListingResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.list.RoutesAllResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.list.RoutesRegionalResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stop.StopDetailsResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stop.StopListResponse
 import com.stwcoding.networkmodule.ktothelper.HttpClientHelper
@@ -24,7 +24,10 @@ class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
         } ?: get<RoutesAllResponse>("route")
     }
 
-    suspend fun fetchRouteDetails(region: RegionModel, routeCode: String): Result<RouteDetailsResponse> {
+    suspend fun fetchRouteDetails(
+        region: RegionModel,
+        routeCode: String
+    ): Result<RouteDetailsResponse> {
         return get("route/${region.id}/$routeCode")
     }
 
@@ -36,7 +39,10 @@ class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
         return get("stop/$stopId")
     }
 
-    suspend fun fetchStopListByRoute(routeId: String, routeSequence: String): Result<StopListResponse> {
+    suspend fun fetchStopListByRoute(
+        routeId: String,
+        routeSequence: String
+    ): Result<StopListResponse> {
         return get("route-stop/$routeId/$routeSequence")
     }
 

@@ -1,6 +1,12 @@
-package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.routelisting
+/*
+ * Copyright© 2024. singtsun9941. All rights reserved.
+ * 版權所有© 2024. singtsun9941
+ */
+
+package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.list
 
 
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.GMBResponse
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -14,13 +20,13 @@ data class RoutesAllResponse(
     override val generatedTimestamp: String = "", // 2020-12-28T11:14:21.326+08:00
     @SerialName("data")
     val data: Data = Data(),
-    @SerialName("data_timestamp")
-    val dataTimestamp: String = "" // 2020-12-22T11:27:48.705+08:00
-): IRouteListingResponse {
+) : GMBResponse, IRouteListingResponse {
     @Serializable
     data class Data(
         @SerialName("routes")
-        val routes: Routes = Routes()
+        val routes: Routes = Routes(),
+        @SerialName("data_timestamp")
+        val dataTimestamp: String = "" // 2020-12-22T11:27:48.705+08:00
     ) {
         @Serializable
         data class Routes(
