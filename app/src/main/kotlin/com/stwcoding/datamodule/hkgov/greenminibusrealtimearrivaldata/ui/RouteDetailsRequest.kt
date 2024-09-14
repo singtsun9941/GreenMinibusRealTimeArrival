@@ -17,31 +17,38 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.GreenMinibusRealTimeArrivalClient
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.RegionModel
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteDetailsResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.GMBResponse
 import kotlinx.coroutines.launch
 
 @Composable
 fun RouteDetailsRequest(
     modifier: Modifier = Modifier,
     client: GreenMinibusRealTimeArrivalClient,
-    onResponseReceived: (RouteDetailsResponse?) -> Unit
+    onResponseReceived: (GMBResponse?) -> Unit
 ) = Box(modifier = modifier) {
     val scope = rememberCoroutineScope()
+
     var regionModel by rememberSaveable { mutableStateOf(RegionModel.NewTerritories) }
     var regionCode by rememberSaveable { mutableStateOf("") }
+    val api by remember(regionModel, regionCode) {
+        mutableStateOf(client.getRouteDetailsAPI(regionModel, regionCode))
+    }
 
-    Column {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .weight(5f),
+            modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             DropdownInput(
@@ -66,21 +73,30 @@ fun RouteDetailsRequest(
             )
         }
 
-
         Button(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxSize()
-                .weight(1f),
+            modifier = Modifier.padding(16.dp),
             onClick = {
                 scope.launch {
                     onResponseReceived(
-                        client.fetchRouteDetails(regionModel, regionCode).getOrNull()
+                        api.fetch().getOrNull()
                     )
                 }
             }
         ) {
             Text(text = "Fetch Route Details")
+        }
+
+        Button(
+            modifier = Modifier.padding(16.dp),
+            onClick = {
+                scope.launch {
+                    onResponseReceived(
+                        api.getLastUpdate().getOrNull()
+                    )
+                }
+            }
+        ) {
+            Text(text = "Fetch Route Details Last update")
         }
     }
 }
