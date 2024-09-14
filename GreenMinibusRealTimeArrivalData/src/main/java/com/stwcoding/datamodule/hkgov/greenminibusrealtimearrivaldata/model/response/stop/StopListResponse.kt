@@ -19,7 +19,7 @@ data class StopListResponse(
     @SerialName("generated_timestamp")
     override val generatedTimestamp: String = "", // 2020-12-28T14:51:23.258+08:00
     @SerialName("data")
-    val data: Data
+    override val data: Data
 ) : GMBResponse {
     @Serializable
     data class Data(

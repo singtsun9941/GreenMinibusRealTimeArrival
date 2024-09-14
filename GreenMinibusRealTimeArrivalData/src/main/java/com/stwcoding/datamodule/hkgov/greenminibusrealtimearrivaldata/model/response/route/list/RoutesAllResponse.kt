@@ -19,7 +19,7 @@ data class RoutesAllResponse(
     @SerialName("generated_timestamp")
     override val generatedTimestamp: String = "", // 2020-12-28T11:14:21.326+08:00
     @SerialName("data")
-    val data: Data = Data(),
+    override val data: Data = Data(),
 ) : GMBResponse, IRouteListingResponse {
     @Serializable
     data class Data(

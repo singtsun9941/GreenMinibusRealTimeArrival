@@ -9,4 +9,5 @@ interface GMBResponse {
     val type: String
     val version: String
     val generatedTimestamp: String
+    val data: Any
 }

@@ -18,7 +18,7 @@ data class LastUpdateByRouteResponse(
     @SerialName("generated_timestamp")
     override val generatedTimestamp: String = "", // 2024-09-14T21:38:58.804+08:00
     @SerialName("data")
-    val data: List<Data> = listOf()
+    override val data: List<Data> = listOf()
 ) : GMBResponse {
     @Serializable
     data class Data(
