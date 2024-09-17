@@ -43,12 +43,11 @@ fun RouteDetailsRequest(
         mutableStateOf(client.getRouteDetailsAPI(regionModel, regionCode))
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Column {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .weight(5f),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             DropdownInput(
@@ -74,7 +73,10 @@ fun RouteDetailsRequest(
         }
 
         Button(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize()
+                .weight(1f),
             onClick = {
                 scope.launch {
                     onResponseReceived(
@@ -87,7 +89,10 @@ fun RouteDetailsRequest(
         }
 
         Button(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize()
+                .weight(1f),
             onClick = {
                 scope.launch {
                     onResponseReceived(
