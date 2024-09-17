@@ -2,6 +2,7 @@ package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata
 
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.RegionModel
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.RouteDetailsAPI
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.RouteListAPI
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.lastupdate.LastUpdateByRouteResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteDetailsResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteListResponse
@@ -20,10 +21,16 @@ class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
         domain = "https://data.etagmb.gov.hk"
     )
 ) {
-    suspend fun fetchRouteList(region: RegionModel? = null): Result<IRouteListingResponse> {
-        return region?.let {
-            get<RoutesRegionalResponse>("route/${region.id}")
-        } ?: get<RoutesAllResponse>("route")
+     fun getRouteListAPI(region: RegionModel? = null) = object : RouteListAPI() {
+        override suspend fun fetch(): Result<IRouteListingResponse> {
+            return region?.let {
+                get<RoutesRegionalResponse>("route/${region.id}")
+            } ?: get<RoutesAllResponse>("route")
+        }
+
+        override suspend fun getLastUpdate(): Result<LastUpdateByRouteResponse> {
+            return get("/last-update/route/${region?.id.orEmpty()}")
+        }
     }
 
     fun getRouteDetailsAPI(

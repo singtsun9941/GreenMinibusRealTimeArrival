@@ -7,5 +7,8 @@ package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api
 
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.lastupdate.LastUpdateByRouteResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteDetailsResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.list.IRouteListingResponse
+
+abstract class RouteListAPI: Fetchable<IRouteListingResponse>, HaveLastUpdate<LastUpdateByRouteResponse>
 
 abstract class RouteDetailsAPI: Fetchable<RouteDetailsResponse>, HaveLastUpdate<LastUpdateByRouteResponse>
