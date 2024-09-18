@@ -47,8 +47,17 @@ class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
         }
     }
 
-    suspend fun fetchRouteDetails(routeCodeId: String): Result<RouteDetailsResponse> {
-        return get("route/$routeCodeId")
+    // TODO when routeCode is empty string(""), api return RouteList json
+    suspend fun getRouteDetailsAPI(
+        routeId: String
+    )= object : RouteDetailsAPI() {
+        override suspend fun fetch(): Result<RouteDetailsResponse> {
+            return get("route/$routeId")
+        }
+
+        override suspend fun getLastUpdate(): Result<LastUpdateByRouteResponse> {
+            return get("/last-update/route//$routeId")
+        }
     }
 
     suspend fun fetchStopDetails(stopId: String): Result<StopDetailsResponse> {

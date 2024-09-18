@@ -23,17 +23,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.GreenMinibusRealTimeArrivalClient
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteDetailsResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.GMBResponse
 import kotlinx.coroutines.launch
 
 @Composable
 fun RouteDetailsByRouteIdRequest(
     modifier: Modifier = Modifier,
     client: GreenMinibusRealTimeArrivalClient,
-    onResponseReceived: (RouteDetailsResponse?) -> Unit
+    onResponseReceived: (GMBResponse?) -> Unit
 ) = Box(modifier = modifier) {
     val scope = rememberCoroutineScope()
-    var regionId by rememberSaveable { mutableStateOf("") }
+    var routeId by rememberSaveable { mutableStateOf("") }
 
     Column {
         Column(
@@ -44,10 +44,10 @@ fun RouteDetailsByRouteIdRequest(
         ) {
             TextField(
                 modifier = modifier.fillMaxWidth(),
-                value = regionId,
-                onValueChange = { regionId = it },
+                value = routeId,
+                onValueChange = { routeId = it },
                 label = {
-                    Text(text = "Region Id")
+                    Text(text = "Route Id")
                 }
             )
         }
@@ -60,7 +60,23 @@ fun RouteDetailsByRouteIdRequest(
             onClick = {
                 scope.launch {
                     onResponseReceived(
-                        client.fetchRouteDetails(regionId).getOrNull()
+                        client.getRouteDetailsAPI(routeId).fetch().getOrNull()
+                    )
+                }
+            }
+        ) {
+            Text(text = "Fetch Route Details")
+        }
+
+        Button(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize()
+                .weight(1f),
+            onClick = {
+                scope.launch {
+                    onResponseReceived(
+                        client.getRouteDetailsAPI(routeId).getLastUpdate().getOrNull()
                     )
                 }
             }
