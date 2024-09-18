@@ -33,6 +33,7 @@ class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
         }
     }
 
+    // TODO when routeCode is empty string(""), api return RouteList json
     fun getRouteDetailsAPI(
         region: RegionModel,
         routeCode: String
