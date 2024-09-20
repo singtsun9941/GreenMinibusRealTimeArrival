@@ -7,6 +7,10 @@ package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api
 
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.GMBResponse
 
+interface API {
+    val path: String
+}
+
 interface Fetchable<T: GMBResponse>{
     suspend fun fetch() : Result<T>
 }

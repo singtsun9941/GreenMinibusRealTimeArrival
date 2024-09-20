@@ -27,15 +27,15 @@ class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
         domain = "https://data.etagmb.gov.hk"
     )
 ) {
-    fun getRouteListAPI(region: RegionModel? = null) = object : RouteListAPI() {
+    fun getRouteListAPI(region: RegionModel? = null) = object : RouteListAPI("route") {
         override suspend fun fetch(): Result<IRouteListingResponse> {
             return region?.let {
-                get<RoutesRegionalResponse>("route/${region.id}")
-            } ?: get<RoutesAllResponse>("route")
+                get<RoutesRegionalResponse>("$path/${region.id}")
+            } ?: get<RoutesAllResponse>(path)
         }
 
         override suspend fun getLastUpdate(): Result<LastUpdateByRouteResponse> {
-            return get("/last-update/route/${region?.id.orEmpty()}")
+            return get("/last-update/$path/${region?.id.orEmpty()}")
         }
     }
 
@@ -43,65 +43,66 @@ class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
     fun getRouteDetailsAPI(
         region: RegionModel,
         routeCode: String
-    ) = object : RouteDetailsAPI() {
+    ) = object : RouteDetailsAPI("route/${region.id}/$routeCode") {
         override suspend fun fetch(): Result<RouteDetailsResponse> {
-            return get("route/${region.id}/$routeCode")
+            return get(path)
         }
 
         override suspend fun getLastUpdate(): Result<LastUpdateByRouteResponse> {
-            return get("/last-update/route/${region.id}/$routeCode")
+            return get("/last-update/$path")
         }
     }
 
     // TODO when routeCode is empty string(""), api return RouteList json
     suspend fun getRouteDetailsAPI(
         routeId: String
-    ) = object : RouteDetailsAPI() {
+    ) = object : RouteDetailsAPI("route/$routeId") {
         override suspend fun fetch(): Result<RouteDetailsResponse> {
-            return get("route/$routeId")
+            return get(path)
         }
 
         override suspend fun getLastUpdate(): Result<LastUpdateByRouteResponse> {
-            return get("/last-update/route//$routeId")
+            return get("/last-update/$path")
         }
     }
 
-    fun getStopDetailsAPI(stopId: String) = object : StopDetailsAPI() {
+    fun getStopDetailsAPI(stopId: String) = object : StopDetailsAPI("stop/$stopId") {
         override suspend fun fetch(): Result<StopDetailsResponse> {
-            return get("stop/$stopId")
+            return get(path)
         }
 
         override suspend fun getLastUpdate(): Result<LastUpdateSingleDataResponse> {
-            return get("/last-update/stop/$stopId")
+            return get("/last-update/$path")
         }
     }
 
     fun getStopListByRouteAPI(
         routeId: String,
         routeSequence: String
-    ) = object : StopListByRouteAPI() {
+    ) = object : StopListByRouteAPI("route-stop/$routeId/$routeSequence") {
         override suspend fun fetch(): Result<StopListResponse> {
-            return get("route-stop/$routeId/$routeSequence")
+            return get(path)
         }
 
         override suspend fun getLastUpdate(): Result<LastUpdateSingleDataResponse> {
-            return get("/last-update/route-stop/$routeId/$routeSequence")
+            return get("/last-update/$path")
         }
     }
 
-    suspend fun getRouteListByStopAPI(stopId: String) = object : RouteListByStopAPI() {
-        override suspend fun fetch(): Result<RouteListResponse> {
-            return get("stop-route/$stopId")
+    suspend fun getRouteListByStopAPI(stopId: String) =
+        object : RouteListByStopAPI("stop-route/$stopId") {
+            override suspend fun fetch(): Result<RouteListResponse> {
+                return get("path")
+            }
+
+            override suspend fun getLastUpdate(): Result<LastUpdateByRouteResponse> {
+                return get("/last-update/$path")
+            }
         }
 
-        override suspend fun getLastUpdate(): Result<LastUpdateByRouteResponse> {
-            return get("/last-update/stop-route/$stopId")
-        }
-    }
-
-    suspend fun getAllStopLastUpdateAPI(stopId: String) = object : AllStopLastUpdateAPI() {
+    suspend fun getAllStopLastUpdateAPI(stopId: String) = object : AllStopLastUpdateAPI("stop") {
         override suspend fun getLastUpdate(): Result<LastUpdateByStopResponse> {
-            return get("/last-update/stop")
+            return get("/last-update/$path")
         }
     }
 }

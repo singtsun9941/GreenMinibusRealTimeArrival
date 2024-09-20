@@ -14,14 +14,26 @@ import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.resp
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stop.StopDetailsResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stop.StopListResponse
 
-abstract class RouteListAPI: Fetchable<IRouteListingResponse>, HaveLastUpdate<LastUpdateByRouteResponse>
+abstract class RouteListAPI(
+    override val path: String,
+) : API, Fetchable<IRouteListingResponse>, HaveLastUpdate<LastUpdateByRouteResponse>
 
-abstract class RouteDetailsAPI: Fetchable<RouteDetailsResponse>, HaveLastUpdate<LastUpdateByRouteResponse>
+abstract class RouteDetailsAPI(
+    override val path: String,
+) : API, Fetchable<RouteDetailsResponse>, HaveLastUpdate<LastUpdateByRouteResponse>
 
-abstract class StopDetailsAPI: Fetchable<StopDetailsResponse>, HaveLastUpdate<LastUpdateSingleDataResponse>
+abstract class StopDetailsAPI(
+    override val path: String,
+) : API, Fetchable<StopDetailsResponse>, HaveLastUpdate<LastUpdateSingleDataResponse>
 
-abstract class StopListByRouteAPI: Fetchable<StopListResponse>, HaveLastUpdate<LastUpdateSingleDataResponse>
+abstract class StopListByRouteAPI(
+    override val path: String,
+) : API, Fetchable<StopListResponse>, HaveLastUpdate<LastUpdateSingleDataResponse>
 
-abstract class RouteListByStopAPI: Fetchable<RouteListResponse>, HaveLastUpdate<LastUpdateByRouteResponse>
+abstract class RouteListByStopAPI(
+    override val path: String,
+) : API, Fetchable<RouteListResponse>, HaveLastUpdate<LastUpdateByRouteResponse>
 
-abstract class AllStopLastUpdateAPI: HaveLastUpdate<LastUpdateByStopResponse>
+abstract class AllStopLastUpdateAPI(
+    override val path: String,
+) : API, HaveLastUpdate<LastUpdateByStopResponse>
