@@ -17,21 +17,15 @@ data class LastUpdateByStopResponse(
     @SerialName("version")
     override val version: String = "", // 1.0
     @SerialName("generated_timestamp")
-    override val generatedTimestamp: String = "", // 2020-11-25T10:34:10.082+08:00
+    override val generatedTimestamp: String = "", // 2024-09-21T16:14:26.225+08:00
     @SerialName("data")
-    override val data: Data = Data()
-) : GMBResponse {
+    override val data: List<Data> = listOf()
+) :GMBResponse{
     @Serializable
     data class Data(
-        @SerialName("data_timestamp")
-        val dataTimestamp: List<DataTimestamp> = listOf()
-    ) {
-        @Serializable
-        data class DataTimestamp(
-            @SerialName("stop_id")
-            val stopId: Int = 0, // 20000849
-            @SerialName("last_update_date")
-            val lastUpdateDate: String = "" // 2020-09-24T08:24:45.401+08:00
-        )
-    }
+        @SerialName("stop_id")
+        val stopId: Int = 0, // 20012054
+        @SerialName("last_update_date")
+        val lastUpdateDate: String = "" // 2023-01-30T16:02:25.069+00:00
+    )
 }
