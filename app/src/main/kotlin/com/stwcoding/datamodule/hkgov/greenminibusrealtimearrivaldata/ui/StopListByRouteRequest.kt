@@ -23,14 +23,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.GreenMinibusRealTimeArrivalClient
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stop.StopListResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.GMBResponse
 import kotlinx.coroutines.launch
 
 @Composable
 fun StopListByRouteRequest(
     modifier: Modifier = Modifier,
     client: GreenMinibusRealTimeArrivalClient,
-    onResponseReceived: (StopListResponse?) -> Unit
+    onResponseReceived: (GMBResponse?) -> Unit
 ) = Box(modifier = modifier) {
     val scope = rememberCoroutineScope()
     var routeId by rememberSaveable { mutableStateOf("") }
@@ -63,6 +63,21 @@ fun StopListByRouteRequest(
             )
         }
 
+        Button(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize()
+                .weight(1f),
+            onClick = {
+                scope.launch {
+                    onResponseReceived(
+                        client.getStopListByRouteAPI(routeId, routeSequence).fetch().getOrNull()
+                    )
+                }
+            }
+        ) {
+            Text(text = "Fetch Stop Route List")
+        }
 
         Button(
             modifier = Modifier
@@ -72,12 +87,12 @@ fun StopListByRouteRequest(
             onClick = {
                 scope.launch {
                     onResponseReceived(
-                        client.fetchStopListByRoute(routeId, routeSequence).getOrNull()
+                        client.getStopListByRouteAPI(routeId, routeSequence).getLastUpdate().getOrNull()
                     )
                 }
             }
         ) {
-            Text(text = "Fetch Stop Route List")
+            Text(text = "Stop Route List last update")
         }
     }
 }
