@@ -65,13 +65,13 @@ class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
     }
 
     fun getStopDetailsAPI(stopId: String) = object : StopDetailsAPI("stop/$stopId") {
-        override suspend fun fetch(): Result<StopDetailsResponse> {
-            return get(path)
-        }
+        override suspend fun fetch(): Result<StopDetailsResponse> =
+            get(path)
+        override suspend fun getETA(): Result<LastUpdateSingleDataResponse> =
+            get("/eta/$path")
+        override suspend fun getLastUpdate(): Result<LastUpdateSingleDataResponse> =
+            get("/last-update/$path")
 
-        override suspend fun getLastUpdate(): Result<LastUpdateSingleDataResponse> {
-            return get("/last-update/$path")
-        }
     }
 
     fun getStopListByRouteAPI(

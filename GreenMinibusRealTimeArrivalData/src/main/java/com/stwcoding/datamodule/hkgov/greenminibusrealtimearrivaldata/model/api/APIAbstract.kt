@@ -23,7 +23,10 @@ abstract class RouteDetailsAPI(
 
 abstract class StopDetailsAPI(
     override val path: String,
-) : API, Fetchable<StopDetailsResponse>, HaveLastUpdate<LastUpdateSingleDataResponse>
+) : API,
+    Fetchable<StopDetailsResponse>,
+    HaveLastUpdate<LastUpdateSingleDataResponse>,
+    ETA<LastUpdateSingleDataResponse>
 
 abstract class StopListByRouteAPI(
     override val path: String,
