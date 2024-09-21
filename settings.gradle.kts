@@ -23,5 +23,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "GreenMinibusRealTimeArrival"
-include(":app")
+include(":sampleApp")
 include(":GreenMinibusRealTimeArrivalData")
