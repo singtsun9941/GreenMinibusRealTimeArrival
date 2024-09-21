@@ -37,3 +37,7 @@ abstract class RouteListByStopAPI(
 abstract class AllStopLastUpdateAPI(
     override val path: String,
 ) : API, HaveLastUpdate<LastUpdateByStopResponse>
+
+abstract class AllRouteStopLastUpdateAPI(
+    override val path: String,
+) : API, HaveLastUpdate<LastUpdateByRouteResponse>

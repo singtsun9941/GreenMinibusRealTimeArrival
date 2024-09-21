@@ -1,6 +1,7 @@
 package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata
 
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.RegionModel
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.AllRouteStopLastUpdateAPI
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.AllStopLastUpdateAPI
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.RouteDetailsAPI
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.RouteListAPI
@@ -100,8 +101,14 @@ class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
             }
         }
 
-    suspend fun getAllStopLastUpdateAPI(stopId: String) = object : AllStopLastUpdateAPI("stop") {
+    suspend fun getAllStopLastUpdateAPI() = object : AllStopLastUpdateAPI("stop") {
         override suspend fun getLastUpdate(): Result<LastUpdateByStopResponse> {
+            return get("/last-update/$path")
+        }
+    }
+
+    suspend fun getAllRouteStopLastUpdateAPI() = object : AllRouteStopLastUpdateAPI("route-stop") {
+        override suspend fun getLastUpdate(): Result<LastUpdateByRouteResponse> {
             return get("/last-update/$path")
         }
     }
