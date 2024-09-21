@@ -1,15 +1,12 @@
 package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata
 
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.RegionModel
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.AllRouteStopLastUpdateAPI
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.AllStopLastUpdateAPI
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.RouteDetailsAPI
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.RouteListAPI
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.RouteListByStopAPI
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.StopDetailsAPI
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.StopListByRouteAPI
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.lastupdate.LastUpdateByRouteResponse
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.lastupdate.LastUpdateByStopResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.lastupdate.LastUpdateSingleDataResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteDetailsResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteListResponse
@@ -100,16 +97,4 @@ class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
                 return get("/last-update/$path")
             }
         }
-
-    suspend fun getAllStopLastUpdateAPI() = object : AllStopLastUpdateAPI("stop") {
-        override suspend fun getLastUpdate(): Result<LastUpdateByStopResponse> {
-            return get("/last-update/$path")
-        }
-    }
-
-    suspend fun getAllRouteStopLastUpdateAPI() = object : AllRouteStopLastUpdateAPI("route-stop") {
-        override suspend fun getLastUpdate(): Result<LastUpdateByRouteResponse> {
-            return get("/last-update/$path")
-        }
-    }
 }

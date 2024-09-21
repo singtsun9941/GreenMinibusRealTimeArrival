@@ -6,7 +6,6 @@
 package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api
 
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.lastupdate.LastUpdateByRouteResponse
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.lastupdate.LastUpdateByStopResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.lastupdate.LastUpdateSingleDataResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteDetailsResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteListResponse
@@ -33,11 +32,3 @@ abstract class StopListByRouteAPI(
 abstract class RouteListByStopAPI(
     override val path: String,
 ) : API, Fetchable<RouteListResponse>, HaveLastUpdate<LastUpdateByRouteResponse>
-
-abstract class AllStopLastUpdateAPI(
-    override val path: String,
-) : API, HaveLastUpdate<LastUpdateByStopResponse>
-
-abstract class AllRouteStopLastUpdateAPI(
-    override val path: String,
-) : API, HaveLastUpdate<LastUpdateByRouteResponse>
