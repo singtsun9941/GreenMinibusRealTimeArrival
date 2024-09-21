@@ -7,8 +7,10 @@ package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api
 
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.GMBResponse
 
-interface API {
-    val path: String
+abstract class API(val path: String){
+    override fun toString(): String {
+        return "API Path: $path"
+    }
 }
 
 interface Fetchable<T: GMBResponse>{
