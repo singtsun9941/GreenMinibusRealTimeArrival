@@ -23,16 +23,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.GreenMinibusRealTimeArrivalClient
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.RegionModel
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteDetailsResponse
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stop.StopDetailsResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.GMBResponse
 import kotlinx.coroutines.launch
 
 @Composable
 fun StopDetailsRequest(
     modifier: Modifier = Modifier,
     client: GreenMinibusRealTimeArrivalClient,
-    onResponseReceived: (StopDetailsResponse?) -> Unit
+    onResponseReceived: (GMBResponse?) -> Unit
 ) = Box(modifier = modifier) {
     val scope = rememberCoroutineScope()
     var stopId by rememberSaveable { mutableStateOf("") }
@@ -62,12 +60,28 @@ fun StopDetailsRequest(
             onClick = {
                 scope.launch {
                     onResponseReceived(
-                        client.fetchStopDetails(stopId).getOrNull()
+                        client.getStopDetailsAPI(stopId).fetch().getOrNull()
                     )
                 }
             }
         ) {
-            Text(text = "Route Details")
+            Text(text = "Fetch Stop Details")
+        }
+
+        Button(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize()
+                .weight(1f),
+            onClick = {
+                scope.launch {
+                    onResponseReceived(
+                        client.getStopDetailsAPI(stopId).getLastUpdate().getOrNull()
+                    )
+                }
+            }
+        ) {
+            Text(text = "Stop Details Last update")
         }
     }
 }

@@ -24,16 +24,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.GreenMinibusRealTimeArrivalClient
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.GMBResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteListResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stop.StopListResponse
 import kotlinx.coroutines.launch
 
 @Composable
-fun RouteDetailsByRouteIdRequest(
+fun RouteListByStopRequest(
     modifier: Modifier = Modifier,
     client: GreenMinibusRealTimeArrivalClient,
     onResponseReceived: (GMBResponse?) -> Unit
 ) = Box(modifier = modifier) {
     val scope = rememberCoroutineScope()
-    var routeId by rememberSaveable { mutableStateOf("") }
+    var stopId by rememberSaveable { mutableStateOf("") }
+
 
     Column {
         Column(
@@ -44,14 +47,15 @@ fun RouteDetailsByRouteIdRequest(
         ) {
             TextField(
                 modifier = modifier.fillMaxWidth(),
-                value = routeId,
-                onValueChange = { routeId = it },
+                value = stopId,
+                onValueChange = { stopId = it },
                 label = {
-                    Text(text = "Route Id")
+                    Text(text = "Stop Id")
                 }
             )
         }
 
+
         Button(
             modifier = Modifier
                 .padding(16.dp)
@@ -60,12 +64,12 @@ fun RouteDetailsByRouteIdRequest(
             onClick = {
                 scope.launch {
                     onResponseReceived(
-                        client.getRouteDetailsAPI(routeId).fetch().getOrNull()
+                        client.getRouteListByStopAPI(stopId).fetch().getOrNull()
                     )
                 }
             }
         ) {
-            Text(text = "Fetch Route Details")
+            Text(text = "Fetch Route List")
         }
 
         Button(
@@ -76,12 +80,12 @@ fun RouteDetailsByRouteIdRequest(
             onClick = {
                 scope.launch {
                     onResponseReceived(
-                        client.getRouteDetailsAPI(routeId).getLastUpdate().getOrNull()
+                        client.getRouteListByStopAPI(stopId).getLastUpdate().getOrNull()
                     )
                 }
             }
         ) {
-            Text(text = "Fetch Route Details")
+            Text(text = "Route List Last update")
         }
     }
 }

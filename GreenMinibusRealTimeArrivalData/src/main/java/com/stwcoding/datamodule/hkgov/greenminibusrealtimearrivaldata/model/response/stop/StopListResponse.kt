@@ -6,20 +6,21 @@
 package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stop
 
 
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.GMBResponse
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class StopListResponse(
     @SerialName("type")
-    val type: String = "", // Route-Stop
+    override val type: String = "", // Route-Stop
     @SerialName("version")
-    val version: String = "", // 1.0
+    override val version: String = "", // 1.0
     @SerialName("generated_timestamp")
-    val generatedTimestamp: String = "", // 2020-12-28T14:51:23.258+08:00
+    override val generatedTimestamp: String = "", // 2020-12-28T14:51:23.258+08:00
     @SerialName("data")
-    val data: Data
-) {
+    override val data: Data
+) : GMBResponse {
     @Serializable
     data class Data(
         @SerialName("route_stops")

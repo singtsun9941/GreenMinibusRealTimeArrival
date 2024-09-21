@@ -13,6 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.APITestingScreen
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.RouteDetailsByRouteIdRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.RouteDetailsRequest
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.RouteListByStopRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.RouteListingRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.StopDetailsRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.StopListByRouteRequest
@@ -68,6 +69,15 @@ class MainActivity : ComponentActivity() {
                     },
                     { responseState ->
                         StopDetailsRequest(
+                            client = client,
+                        ) { response ->
+                            scope.launch {
+                                responseState.emit(response.toString())
+                            }
+                        }
+                    },
+                    { responseState ->
+                        RouteListByStopRequest(
                             client = client,
                         ) { response ->
                             scope.launch {
