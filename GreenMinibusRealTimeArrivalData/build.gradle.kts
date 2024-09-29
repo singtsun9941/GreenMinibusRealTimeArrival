@@ -10,7 +10,7 @@ java {
 }
 
 dependencies {
-    implementation("com.stwcoding.networkmodule:ktorhelper:1.0.0")
+    implementation("com.stwcoding.networkmodule:ktorhelper:1.1.0-SNAPSHOT")
     implementation("io.ktor:ktor-client-okhttp:2.3.12")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 }
