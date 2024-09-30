@@ -23,7 +23,7 @@ import com.stwcoding.networkmodule.ktothelper.HttpClientHelper
 import com.stwcoding.networkmodule.ktothelper.createHttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 
-class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
+class GreenMinibusRealTimeArrivalRemoteDataSource : HttpClientHelper(
     createHttpClient(
         engine = OkHttp.create(),
         domain = "https://data.etagmb.gov.hk"
@@ -105,7 +105,6 @@ class GreenMinibusRealTimeArrivalClient : HttpClientHelper(
             }
         }
 
-    // TBC change other to below format
     fun getRouteStopAPI() = object : API("route-stop") {
         fun getRouteAPI(routeId: String) = object : API("$path/$routeId") {
             fun getStopListAPI(routeSeq: String) = object : API("$path/$routeSeq") {

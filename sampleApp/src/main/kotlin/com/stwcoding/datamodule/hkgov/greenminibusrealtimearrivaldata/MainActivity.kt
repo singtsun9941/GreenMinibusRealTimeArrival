@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val client = GreenMinibusRealTimeArrivalClient()
+            val client = GreenMinibusRealTimeArrivalRemoteDataSource()
             val scope = rememberCoroutineScope()
 
             GreenMinibusRealTimeArrivalTheme {

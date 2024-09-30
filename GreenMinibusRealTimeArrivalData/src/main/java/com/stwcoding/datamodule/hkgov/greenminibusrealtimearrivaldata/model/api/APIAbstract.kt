@@ -31,7 +31,8 @@ abstract class StopDetailsAPI(
 
 abstract class StopListByRouteAPI(
     path: String,
-) : API(path), Fetchable<StopListResponse>, HaveLastUpdate<LastUpdateSingleDataResponse>
+) : API(path), Fetchable<StopListResponse>,
+    HaveLastUpdate<LastUpdateSingleDataResponse>
 
 abstract class RouteListByStopAPI(
     path: String,
