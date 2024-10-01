@@ -74,7 +74,7 @@ fun RouteListingRequest(
             onClick = {
                 scope.launch {
                     onResponseReceived(
-                        api.getLastUpdate().getOrNull()
+                        api.fetchLastUpdate().getOrNull()
                     )
                 }
             }

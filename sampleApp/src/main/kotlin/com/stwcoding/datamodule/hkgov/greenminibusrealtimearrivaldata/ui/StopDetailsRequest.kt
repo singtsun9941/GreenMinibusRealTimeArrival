@@ -76,7 +76,7 @@ fun StopDetailsRequest(
             onClick = {
                 scope.launch {
                     onResponseReceived(
-                        client.getStopDetailsAPI(stopId).getLastUpdate().getOrNull()
+                        client.getStopDetailsAPI(stopId).fetchLastUpdate().getOrNull()
                     )
                 }
             }

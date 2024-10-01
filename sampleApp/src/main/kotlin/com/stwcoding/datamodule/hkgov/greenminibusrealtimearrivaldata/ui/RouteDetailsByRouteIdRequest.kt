@@ -76,7 +76,7 @@ fun RouteDetailsByRouteIdRequest(
             onClick = {
                 scope.launch {
                     onResponseReceived(
-                        client.getRouteDetailsAPI(routeId).getLastUpdate().getOrNull()
+                        client.getRouteDetailsAPI(routeId).fetchLastUpdate().getOrNull()
                     )
                 }
             }

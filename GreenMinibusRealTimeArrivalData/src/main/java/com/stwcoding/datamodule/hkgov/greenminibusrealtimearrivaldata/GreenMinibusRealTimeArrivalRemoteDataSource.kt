@@ -36,7 +36,7 @@ class GreenMinibusRealTimeArrivalRemoteDataSource : HttpClientHelper(
             } ?: get<RoutesAllResponse>(path)
         }
 
-        override suspend fun getLastUpdate(): Result<LastUpdateByRouteResponse> {
+        override suspend fun fetchLastUpdate(): Result<LastUpdateByRouteResponse> {
             return get("/last-update/$path/${region?.id.orEmpty()}")
         }
     }
@@ -50,7 +50,7 @@ class GreenMinibusRealTimeArrivalRemoteDataSource : HttpClientHelper(
             return get(path)
         }
 
-        override suspend fun getLastUpdate(): Result<LastUpdateByRouteResponse> {
+        override suspend fun fetchLastUpdate(): Result<LastUpdateByRouteResponse> {
             return get("/last-update/$path")
         }
     }
@@ -63,7 +63,7 @@ class GreenMinibusRealTimeArrivalRemoteDataSource : HttpClientHelper(
             return get(path)
         }
 
-        override suspend fun getLastUpdate(): Result<LastUpdateByRouteResponse> {
+        override suspend fun fetchLastUpdate(): Result<LastUpdateByRouteResponse> {
             return get("/last-update/$path")
         }
     }
@@ -75,7 +75,7 @@ class GreenMinibusRealTimeArrivalRemoteDataSource : HttpClientHelper(
         override suspend fun getETA(): Result<ETAStopResponse> =
             get("/eta/$path")
 
-        override suspend fun getLastUpdate(): Result<LastUpdateSingleDataResponse> =
+        override suspend fun fetchLastUpdate(): Result<LastUpdateSingleDataResponse> =
             get("/last-update/$path")
 
     }
@@ -89,7 +89,7 @@ class GreenMinibusRealTimeArrivalRemoteDataSource : HttpClientHelper(
             return get(path)
         }
 
-        override suspend fun getLastUpdate(): Result<LastUpdateSingleDataResponse> {
+        override suspend fun fetchLastUpdate(): Result<LastUpdateSingleDataResponse> {
             return get("/last-update/$path")
         }
     }
@@ -100,7 +100,7 @@ class GreenMinibusRealTimeArrivalRemoteDataSource : HttpClientHelper(
                 return get("path")
             }
 
-            override suspend fun getLastUpdate(): Result<LastUpdateByRouteResponse> {
+            override suspend fun fetchLastUpdate(): Result<LastUpdateByRouteResponse> {
                 return get("/last-update/$path")
             }
         }

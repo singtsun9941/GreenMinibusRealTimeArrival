@@ -78,7 +78,7 @@ fun RouteListByStopRequest(
             onClick = {
                 scope.launch {
                     onResponseReceived(
-                        client.getRouteListByStopAPI(stopId).getLastUpdate().getOrNull()
+                        client.getRouteListByStopAPI(stopId).fetchLastUpdate().getOrNull()
                     )
                 }
             }

@@ -18,7 +18,7 @@ interface Fetchable<T: GMBResponse>{
 }
 
 interface HaveLastUpdate<T: GMBResponse>{
-    suspend fun getLastUpdate() : Result<T>
+    suspend fun fetchLastUpdate() : Result<T>
 }
 
 interface ETA<T: GMBResponse>{
