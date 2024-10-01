@@ -5,6 +5,8 @@
 
 package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api
 
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.eta.ETARouteStopBySeq
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.eta.ETARouteStopByStopId
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.eta.ETAStopResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.lastupdate.LastUpdateByRouteResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.lastupdate.LastUpdateSingleDataResponse
@@ -34,7 +36,16 @@ abstract class StopListByRouteAPI(
 ) : API(path), Fetchable<StopListResponse>,
     HaveLastUpdate<LastUpdateSingleDataResponse>
 
+abstract class StopListByRouteETAAPI(
+    path: String,
+) : API(path),
+    ETA<ETARouteStopByStopId>
+
 abstract class RouteListByStopAPI(
     path: String,
 ) : API(path), Fetchable<RouteListResponse>, HaveLastUpdate<LastUpdateByRouteResponse>
 
+abstract class RouteStopLastUpdateAPI(
+    path: String,
+) : API(path),
+    HaveLastUpdate<LastUpdateByRouteResponse>

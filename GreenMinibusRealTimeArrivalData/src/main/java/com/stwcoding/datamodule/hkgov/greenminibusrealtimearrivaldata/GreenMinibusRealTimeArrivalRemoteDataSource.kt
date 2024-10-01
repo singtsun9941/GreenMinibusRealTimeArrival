@@ -5,8 +5,10 @@ import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.RouteDetailsAPI
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.RouteListAPI
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.RouteListByStopAPI
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.RouteStopLastUpdateAPI
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.StopDetailsAPI
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.StopListByRouteAPI
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.api.StopListByRouteETAAPI
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.eta.ETARouteStopBySeq
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.eta.ETARouteStopByStopId
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.eta.ETAStopResponse
@@ -80,7 +82,6 @@ class GreenMinibusRealTimeArrivalRemoteDataSource : HttpClientHelper(
 
     }
 
-    @Deprecated("chang to getRouteStopAPI")
     fun getStopListByRouteAPI(
         routeId: String,
         routeSequence: String
@@ -91,6 +92,16 @@ class GreenMinibusRealTimeArrivalRemoteDataSource : HttpClientHelper(
 
         override suspend fun fetchLastUpdate(): Result<LastUpdateSingleDataResponse> {
             return get("/last-update/$path")
+        }
+    }
+
+    fun getStopListByRouteETAAPI(
+        routeId: String,
+        routeSequence: String,
+        stopSeq: String,
+    ) = object : StopListByRouteETAAPI("route-stop/$routeId/$routeSequence/$stopSeq") {
+        override suspend fun getETA(): Result<ETARouteStopByStopId> {
+            return get("/eta/$path")
         }
     }
 
@@ -105,21 +116,8 @@ class GreenMinibusRealTimeArrivalRemoteDataSource : HttpClientHelper(
             }
         }
 
-    fun getRouteStopAPI() = object : API("route-stop") {
-        fun getRouteAPI(routeId: String) = object : API("$path/$routeId") {
-            fun getStopListAPI(routeSeq: String) = object : API("$path/$routeSeq") {
-                suspend fun fetchStopList(): Result<RouteDetailsResponse> = get(path)
-                suspend fun fetchETA(stopSeq: String): Result<ETARouteStopBySeq> =
-                    get("$path/$stopSeq")
-
-                suspend fun fetchLastUpdate(): Result<LastUpdateByRouteResponse> =
-                    get("last-update/$path")
-            }
-
-            suspend fun fetchETA(stopId: String): Result<ETARouteStopByStopId> =
-                get("$path/$stopId")
-        }
-
-        suspend fun fetchLastUpdate(): Result<LastUpdateByRouteResponse> = get("last-update/$path")
+    fun getRouteStopLastUpdateAPI() = object : RouteStopLastUpdateAPI("route-stop") {
+        override suspend fun fetchLastUpdate(): Result<LastUpdateByRouteResponse> =
+            get("last-update/$path")
     }
 }
