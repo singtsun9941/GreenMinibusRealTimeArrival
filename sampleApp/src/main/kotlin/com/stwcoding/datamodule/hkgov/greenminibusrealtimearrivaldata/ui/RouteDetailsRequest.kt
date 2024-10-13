@@ -24,7 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.GreenMinibusRealTimeArrivalRemoteDataSource
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.RegionModel
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.Region
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.GMBResponse
 import kotlinx.coroutines.launch
 
@@ -36,10 +36,10 @@ fun RouteDetailsRequest(
 ) = Box(modifier = modifier) {
     val scope = rememberCoroutineScope()
 
-    var regionModel by rememberSaveable { mutableStateOf(RegionModel.NewTerritories) }
+    var region by rememberSaveable { mutableStateOf(Region.NewTerritories) }
     var regionCode by rememberSaveable { mutableStateOf("") }
-    val api by remember(regionModel, regionCode) {
-        mutableStateOf(client.getRouteDetailsAPI(regionModel, regionCode))
+    val api by remember(region, regionCode) {
+        mutableStateOf(client.getRouteDetailsAPI(region, regionCode))
     }
 
     Column {
@@ -50,14 +50,14 @@ fun RouteDetailsRequest(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             DropdownInput(
-                description = "RegionModel: $regionModel",
-                radioList = RegionModel.entries.map {
+                description = "RegionModel: $region",
+                radioList = Region.entries.map {
                     it.name to it
                 },
                 isNullable = false
             ) {
                 it?.let {
-                    regionModel = it
+                    region = it
                 }
             }
 

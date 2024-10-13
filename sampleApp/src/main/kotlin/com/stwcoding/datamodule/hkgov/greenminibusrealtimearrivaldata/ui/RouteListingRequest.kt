@@ -21,7 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.GreenMinibusRealTimeArrivalRemoteDataSource
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.RegionModel
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.Region
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.GMBResponse
 import kotlinx.coroutines.launch
 
@@ -32,9 +32,9 @@ fun RouteListingRequest(
     onResponseReceived: (GMBResponse?) -> Unit
 ) = Box(modifier = modifier) {
     val scope = rememberCoroutineScope()
-    var regionModel by rememberSaveable { mutableStateOf<RegionModel?>(null) }
-    val api by remember(regionModel) {
-        mutableStateOf(client.getRouteListAPI(regionModel))
+    var region by rememberSaveable { mutableStateOf<Region?>(null) }
+    val api by remember(region) {
+        mutableStateOf(client.getRouteListAPI(region))
     }
 
     Column {
@@ -42,12 +42,12 @@ fun RouteListingRequest(
             modifier = modifier
                 .padding(16.dp)
                 .weight(5f),
-            description = "RegionModel: $regionModel",
-            radioList = RegionModel.entries.map {
+            description = "RegionModel: $region",
+            radioList = Region.entries.map {
                 it.name to it
             }
         ) {
-            regionModel = it
+            region = it
         }
 
         Button(

@@ -5,7 +5,9 @@
 
 package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response
 
-interface GMBResponse {
+import com.stwcoding.networkmodule.ktothelper.model.Response
+
+interface GMBResponse: Response {
     val type: String
     val version: String
     val generatedTimestamp: String
