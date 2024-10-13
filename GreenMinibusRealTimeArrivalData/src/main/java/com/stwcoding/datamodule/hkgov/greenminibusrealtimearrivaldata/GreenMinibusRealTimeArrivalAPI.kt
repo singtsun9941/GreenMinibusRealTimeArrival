@@ -2,6 +2,9 @@ package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata
 
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.AllRoutesRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.RegionalRoutesRequest
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.RouteDetailsRequest
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.lastupdate.LastUpdateByRouteResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteDetailsResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.list.RoutesAllResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.list.RoutesRegionalResponse
 import com.stwcoding.networkmodule.ktothelper.HttpClientConfig
@@ -43,33 +46,21 @@ object GreenMinibusRealTimeArrivalAPI : KtorAPI(
         }
 
 
-//    // TODO when routeCode is empty string(""), api return RouteList json
-//    fun getRouteDetailsAPI(
-//        region: Region,
-//        routeCode: String
-//    ) = object : RouteDetailsAPI("route/${region.id}/$routeCode") {
-//        override suspend fun fetch(): Result<RouteDetailsResponse> {
-//            return get(path)
-//        }
-//
-//        override suspend fun fetchLastUpdate(): Result<LastUpdateByRouteResponse> {
-//            return get("/last-update/$path")
-//        }
-//    }
-//
-//    // TODO when routeCode is empty string(""), api return RouteList json
-//    suspend fun getRouteDetailsAPI(
-//        routeId: String
-//    ) = object : RouteDetailsAPI("route/$routeId") {
-//        override suspend fun fetch(): Result<RouteDetailsResponse> {
-//            return get(path)
-//        }
-//
-//        override suspend fun fetchLastUpdate(): Result<LastUpdateByRouteResponse> {
-//            return get("/last-update/$path")
-//        }
-//    }
-//
+    // TODO when routeCode is empty string(""), api return RouteList json
+    val routeDetailsAPI = object : API<RouteDetailsRequest, RouteDetailsResponse>("route") {
+        override suspend fun sendRequest(request: RouteDetailsRequest): Result<RouteDetailsResponse> {
+            return request(path, request)
+        }
+    }
+
+    // TODO when routeCode is empty string(""), api return RouteList json
+    val routeDetailsLastUpdateAPI =
+        object : API<RouteDetailsRequest, LastUpdateByRouteResponse>("last-update/route") {
+            override suspend fun sendRequest(request: RouteDetailsRequest): Result<LastUpdateByRouteResponse> {
+                return request(path, request)
+            }
+        }
+
 //    fun getStopDetailsAPI(stopId: String) = object : StopDetailsAPI("stop/$stopId") {
 //        override suspend fun fetch(): Result<StopDetailsResponse> =
 //            get(path)
