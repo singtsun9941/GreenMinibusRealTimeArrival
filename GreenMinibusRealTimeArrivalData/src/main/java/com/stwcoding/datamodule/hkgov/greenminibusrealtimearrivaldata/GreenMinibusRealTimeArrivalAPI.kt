@@ -3,10 +3,12 @@ package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.AllRoutesRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.RegionalRoutesRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.RouteDetailsRequest
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.StopDetailsRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.lastupdate.LastUpdateByRouteResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteDetailsResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.list.RoutesAllResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.list.RoutesRegionalResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stop.StopDetailsResponse
 import com.stwcoding.networkmodule.ktothelper.HttpClientConfig
 import com.stwcoding.networkmodule.ktothelper.KtorAPI
 import com.stwcoding.networkmodule.ktothelper.model.API
@@ -61,18 +63,27 @@ object GreenMinibusRealTimeArrivalAPI : KtorAPI(
             }
         }
 
-//    fun getStopDetailsAPI(stopId: String) = object : StopDetailsAPI("stop/$stopId") {
-//        override suspend fun fetch(): Result<StopDetailsResponse> =
-//            get(path)
-//
-//        override suspend fun getETA(): Result<ETAStopResponse> =
-//            get("/eta/$path")
-//
-//        override suspend fun fetchLastUpdate(): Result<LastUpdateSingleDataResponse> =
-//            get("/last-update/$path")
-//
-//    }
-//
+    val stopDetailsAPI =
+        object : API<StopDetailsRequest, StopDetailsResponse>("stop") {
+            override suspend fun sendRequest(request: StopDetailsRequest): Result<StopDetailsResponse> {
+                return request(path, request)
+            }
+        }
+
+    val stopDetailsLastUpdateAPI =
+        object : API<StopDetailsRequest, StopDetailsResponse>("last-update/stop") {
+            override suspend fun sendRequest(request: StopDetailsRequest): Result<StopDetailsResponse> {
+                return request(path, request)
+            }
+        }
+
+    val stopDetailsETAAPI =
+        object : API<StopDetailsRequest, StopDetailsResponse>("eta/stop") {
+            override suspend fun sendRequest(request: StopDetailsRequest): Result<StopDetailsResponse> {
+                return request(path, request)
+            }
+        }
+
 //    fun getStopListByRouteAPI(
 //        routeId: String,
 //        routeSequence: String
