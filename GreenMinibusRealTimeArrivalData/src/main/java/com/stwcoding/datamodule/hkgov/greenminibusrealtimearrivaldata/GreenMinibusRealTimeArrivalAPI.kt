@@ -4,11 +4,16 @@ import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.requ
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.RegionalRoutesRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.RouteDetailsRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.StopDetailsRequest
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.StopListETARequest
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.StopListRequest
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.eta.ETARouteStopByStopId
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.lastupdate.LastUpdateByRouteResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.lastupdate.LastUpdateSingleDataResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteDetailsResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.list.RoutesAllResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.list.RoutesRegionalResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stop.StopDetailsResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stop.StopListResponse
 import com.stwcoding.networkmodule.ktothelper.HttpClientConfig
 import com.stwcoding.networkmodule.ktothelper.KtorAPI
 import com.stwcoding.networkmodule.ktothelper.model.API
@@ -84,29 +89,27 @@ object GreenMinibusRealTimeArrivalAPI : KtorAPI(
             }
         }
 
-//    fun getStopListByRouteAPI(
-//        routeId: String,
-//        routeSequence: String
-//    ) = object : StopListByRouteAPI("route-stop/$routeId/$routeSequence") {
-//        override suspend fun fetch(): Result<StopListResponse> {
-//            return get(path)
-//        }
-//
-//        override suspend fun fetchLastUpdate(): Result<LastUpdateSingleDataResponse> {
-//            return get("/last-update/$path")
-//        }
-//    }
-//
-//    fun getStopListByRouteETAAPI(
-//        routeId: String,
-//        routeSequence: String,
-//        stopSeq: String,
-//    ) = object : StopListByRouteETAAPI("route-stop/$routeId/$routeSequence/$stopSeq") {
-//        override suspend fun getETA(): Result<ETARouteStopByStopId> {
-//            return get("/eta/$path")
-//        }
-//    }
-//
+    val stopListByRouteAPI =
+        object : API<StopListRequest, StopListResponse>("route-stop") {
+            override suspend fun sendRequest(request: StopListRequest): Result<StopListResponse> {
+                return request(path, request)
+            }
+        }
+
+    val stopListByRouteLastUpdateAPI =
+        object : API<StopListRequest, LastUpdateSingleDataResponse>("last-update/route-stop") {
+            override suspend fun sendRequest(request: StopListRequest): Result<LastUpdateSingleDataResponse> {
+                return request(path, request)
+            }
+        }
+
+    val stopListByRouteETAAPI =
+        object : API<StopListETARequest, ETARouteStopByStopId>("eta/route-stop") {
+            override suspend fun sendRequest(request: StopListETARequest): Result<ETARouteStopByStopId> {
+                return request(path, request)
+            }
+        }
+
 //    suspend fun getRouteListByStopAPI(stopId: String) =
 //        object : RouteListByStopAPI("stop-route/$stopId") {
 //            override suspend fun fetch(): Result<RouteListResponse> {
