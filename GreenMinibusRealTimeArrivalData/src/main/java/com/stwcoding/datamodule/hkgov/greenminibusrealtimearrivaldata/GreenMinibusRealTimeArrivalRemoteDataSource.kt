@@ -1,5 +1,6 @@
 package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata
 
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.AllRoutesRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.RegionalRoutesRequest
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -21,5 +22,11 @@ class GreenMinibusRealTimeArrivalRemoteDataSource(
         request: RegionalRoutesRequest
     ) = withContext(ioDispatcher) {
         gmbApi.lastUpdateRegionalRouteListRegionalAPI.sendRequest(request)
+    }
+
+    suspend fun fetchAllRouteListRegional(
+        request: AllRoutesRequest
+    ) = withContext(ioDispatcher) {
+        gmbApi.allRouteListAPI.sendRequest(request)
     }
 }
