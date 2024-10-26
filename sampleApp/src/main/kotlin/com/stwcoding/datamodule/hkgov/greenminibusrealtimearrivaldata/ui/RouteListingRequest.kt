@@ -20,34 +20,35 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.GreenMinibusRealTimeArrivalClient
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.RegionModel
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.GreenMinibusRealTimeArrivalRemoteDataSource
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.GreenMinibusRealTimeArrivalRepository
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.Region
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.GMBResponse
 import kotlinx.coroutines.launch
 
 @Composable
 fun RouteListingRequest(
     modifier: Modifier = Modifier,
-    client: GreenMinibusRealTimeArrivalClient,
+    client: GreenMinibusRealTimeArrivalRemoteDataSource,
     onResponseReceived: (GMBResponse?) -> Unit
 ) = Box(modifier = modifier) {
     val scope = rememberCoroutineScope()
-    var regionModel by rememberSaveable { mutableStateOf<RegionModel?>(null) }
-    val api by remember(regionModel) {
-        mutableStateOf(client.getRouteListAPI(regionModel))
-    }
+    var region by rememberSaveable { mutableStateOf<Region?>(null) }
+
+    val repository = GreenMinibusRealTimeArrivalRepository
+
 
     Column {
         DropdownInput(
             modifier = modifier
                 .padding(16.dp)
                 .weight(5f),
-            description = "RegionModel: $regionModel",
-            radioList = RegionModel.entries.map {
+            description = "RegionModel: $region",
+            radioList = Region.entries.map {
                 it.name to it
             }
         ) {
-            regionModel = it
+            region = it
         }
 
         Button(
@@ -58,7 +59,7 @@ fun RouteListingRequest(
             onClick = {
                 scope.launch {
                     onResponseReceived(
-                        api.fetch().getOrNull()
+                        repository.fetchRouteList(region)
                     )
                 }
             }
@@ -66,20 +67,20 @@ fun RouteListingRequest(
             Text(text = "Fetch Route List")
         }
 
-        Button(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxSize()
-                .weight(1f),
-            onClick = {
-                scope.launch {
-                    onResponseReceived(
-                        api.getLastUpdate().getOrNull()
-                    )
-                }
-            }
-        ) {
-            Text(text = "Route List Last update")
-        }
+//        Button(
+//            modifier = Modifier
+//                .padding(16.dp)
+//                .fillMaxSize()
+//                .weight(1f),
+//            onClick = {
+//                scope.launch {
+//                    onResponseReceived(
+//                        api.fetchLastUpdate().getOrNull()
+//                    )
+//                }
+//            }
+//        ) {
+//            Text(text = "Route List Last update")
+//        }
     }
 }
