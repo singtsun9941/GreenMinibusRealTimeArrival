@@ -8,10 +8,4 @@ package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.req
 import com.stwcoding.networkmodule.ktothelper.model.request.HttpMethod
 import com.stwcoding.networkmodule.ktothelper.model.request.Request
 
-data class RouteListByStopRequest(
-    val stopId: String
-): Request(HttpMethod.GET){
-    init {
-        addPathSegments(stopId)
-    }
-}
+class RouteStopLastUpdateRequest: Request(HttpMethod.GET)

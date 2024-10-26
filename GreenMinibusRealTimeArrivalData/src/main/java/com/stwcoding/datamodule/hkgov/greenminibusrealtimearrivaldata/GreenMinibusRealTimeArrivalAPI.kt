@@ -3,6 +3,8 @@ package com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.AllRoutesRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.RegionalRoutesRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.RouteDetailsRequest
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.RouteListByStopRequest
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.RouteStopLastUpdateRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.StopDetailsRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.StopListETARequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.request.StopListRequest
@@ -10,6 +12,7 @@ import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.resp
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.lastupdate.LastUpdateByRouteResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.lastupdate.LastUpdateSingleDataResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteDetailsResponse
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.RouteListResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.list.RoutesAllResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.route.list.RoutesRegionalResponse
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.stop.StopDetailsResponse
@@ -110,19 +113,24 @@ object GreenMinibusRealTimeArrivalAPI : KtorAPI(
             }
         }
 
-//    suspend fun getRouteListByStopAPI(stopId: String) =
-//        object : RouteListByStopAPI("stop-route/$stopId") {
-//            override suspend fun fetch(): Result<RouteListResponse> {
-//                return get("path")
-//            }
-//
-//            override suspend fun fetchLastUpdate(): Result<LastUpdateByRouteResponse> {
-//                return get("/last-update/$path")
-//            }
-//        }
-//
-//    fun getRouteStopLastUpdateAPI() = object : RouteStopLastUpdateAPI("route-stop") {
-//        override suspend fun fetchLastUpdate(): Result<LastUpdateByRouteResponse> =
-//            get("last-update/$path")
-//    }
+    val routeListByStopAPI =
+        object : API<RouteListByStopRequest, RouteListResponse>("stop-route") {
+            override suspend fun sendRequest(request: RouteListByStopRequest): Result<RouteListResponse> {
+                return request(path, request)
+            }
+        }
+
+    val routeListByStopLastUpdateAPI =
+        object : API<RouteListByStopRequest, LastUpdateByRouteResponse>("last-update/stop-route") {
+            override suspend fun sendRequest(request: RouteListByStopRequest): Result<LastUpdateByRouteResponse> {
+                return request(path, request)
+            }
+        }
+
+    val routeStopLastUpdateAPI =
+        object : API<RouteStopLastUpdateRequest, LastUpdateByRouteResponse>("route-stop") {
+            override suspend fun sendRequest(request: RouteStopLastUpdateRequest): Result<LastUpdateByRouteResponse> {
+                return request(path, request)
+            }
+        }
 }
