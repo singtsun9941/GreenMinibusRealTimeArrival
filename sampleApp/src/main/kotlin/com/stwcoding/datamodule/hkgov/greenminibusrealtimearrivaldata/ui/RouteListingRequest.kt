@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.GreenMinibusRealTimeArrivalRemoteDataSource
+import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.GreenMinibusRealTimeArrivalRepository
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.Region
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.model.response.GMBResponse
 import kotlinx.coroutines.launch
@@ -33,9 +34,9 @@ fun RouteListingRequest(
 ) = Box(modifier = modifier) {
     val scope = rememberCoroutineScope()
     var region by rememberSaveable { mutableStateOf<Region?>(null) }
-    val api by remember(region) {
-        mutableStateOf(client.getRouteListAPI(region))
-    }
+
+    val repository = GreenMinibusRealTimeArrivalRepository
+
 
     Column {
         DropdownInput(
@@ -58,7 +59,7 @@ fun RouteListingRequest(
             onClick = {
                 scope.launch {
                     onResponseReceived(
-                        api.fetch().getOrNull()
+                        repository.fetchRouteList(region)
                     )
                 }
             }
@@ -66,20 +67,20 @@ fun RouteListingRequest(
             Text(text = "Fetch Route List")
         }
 
-        Button(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxSize()
-                .weight(1f),
-            onClick = {
-                scope.launch {
-                    onResponseReceived(
-                        api.fetchLastUpdate().getOrNull()
-                    )
-                }
-            }
-        ) {
-            Text(text = "Route List Last update")
-        }
+//        Button(
+//            modifier = Modifier
+//                .padding(16.dp)
+//                .fillMaxSize()
+//                .weight(1f),
+//            onClick = {
+//                scope.launch {
+//                    onResponseReceived(
+//                        api.fetchLastUpdate().getOrNull()
+//                    )
+//                }
+//            }
+//        ) {
+//            Text(text = "Route List Last update")
+//        }
     }
 }

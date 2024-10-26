@@ -11,12 +11,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.rememberCoroutineScope
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.APITestingScreen
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.RouteDetailsByRouteIdRequest
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.RouteDetailsRequest
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.RouteListByStopRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.RouteListingRequest
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.StopDetailsRequest
-import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.StopListByRouteRequest
 import com.stwcoding.datamodule.hkgov.greenminibusrealtimearrivaldata.ui.theme.GreenMinibusRealTimeArrivalTheme
 import kotlinx.coroutines.launch
 
@@ -40,51 +35,51 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     },
-                    { responseState ->
-                        RouteDetailsRequest(
-                            client = client,
-                        ) { response ->
-                            scope.launch {
-                                responseState.emit(response.toString())
-                            }
-                        }
-                    },
-                    { responseState ->
-                        RouteDetailsByRouteIdRequest(
-                            client = client,
-                        ) { response ->
-                            scope.launch {
-                                responseState.emit(response.toString())
-                            }
-                        }
-                    },
-                    { responseState ->
-                        StopListByRouteRequest(
-                            client = client,
-                        ) { response ->
-                            scope.launch {
-                                responseState.emit(response.toString())
-                            }
-                        }
-                    },
-                    { responseState ->
-                        StopDetailsRequest(
-                            client = client,
-                        ) { response ->
-                            scope.launch {
-                                responseState.emit(response.toString())
-                            }
-                        }
-                    },
-                    { responseState ->
-                        RouteListByStopRequest(
-                            client = client,
-                        ) { response ->
-                            scope.launch {
-                                responseState.emit(response.toString())
-                            }
-                        }
-                    },
+//                    { responseState ->
+//                        RouteDetailsRequest(
+//                            client = client,
+//                        ) { response ->
+//                            scope.launch {
+//                                responseState.emit(response.toString())
+//                            }
+//                        }
+//                    },
+//                    { responseState ->
+//                        RouteDetailsByRouteIdRequest(
+//                            client = client,
+//                        ) { response ->
+//                            scope.launch {
+//                                responseState.emit(response.toString())
+//                            }
+//                        }
+//                    },
+//                    { responseState ->
+//                        StopListByRouteRequest(
+//                            client = client,
+//                        ) { response ->
+//                            scope.launch {
+//                                responseState.emit(response.toString())
+//                            }
+//                        }
+//                    },
+//                    { responseState ->
+//                        StopDetailsRequest(
+//                            client = client,
+//                        ) { response ->
+//                            scope.launch {
+//                                responseState.emit(response.toString())
+//                            }
+//                        }
+//                    },
+//                    { responseState ->
+//                        RouteListByStopRequest(
+//                            client = client,
+//                        ) { response ->
+//                            scope.launch {
+//                                responseState.emit(response.toString())
+//                            }
+//                        }
+//                    },
                 )
             }
         }
